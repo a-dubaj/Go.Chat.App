@@ -29,6 +29,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd backend
+        go mod tidy
         go mod download
 
     - name: Install golangci-lint
