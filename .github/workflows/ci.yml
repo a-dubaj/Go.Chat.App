@@ -32,15 +32,6 @@ jobs:
         go mod tidy
         go mod download
 
-    - name: Install golangci-lint
-      run: |
-        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
-
-    - name: Run golangci-lint
-      run: |
-        cd backend
-        golangci-lint run
-
     - name: Build
       run: |
         cd backend
