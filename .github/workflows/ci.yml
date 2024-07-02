@@ -22,15 +22,19 @@ jobs:
         path: |
           ~/go/pkg/mod
           ~/.cache/go-build
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-${{ hashFiles('**/backend/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
 
     - name: Install dependencies
-      run: go mod download
+      run: |
+        cd backend
+        go mod download
 
     - name: Build
-      run: go build -v ./...
+      run: |
+        cd backend
+        go build -v ./...
 
   build-frontend:
     name: Build Frontend
@@ -49,12 +53,16 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
 
     - name: Install dependencies
-      run: cd frontend && npm install
+      run: |
+        cd frontend
+        npm install
 
     - name: Build
-      run: cd frontend && npm run build
+      run: |
+        cd frontend
+        npm run build
